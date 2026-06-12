@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paper-futures-multi-agent-bot"
+version = "0.1.0"
+description = "Conservative multi-agent AI trading bot skeleton for paper futures trading."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "pandas",
+  "numpy",
+  "scikit-learn",
+  "xgboost",
+  "matplotlib",
+  "joblib",
+  "python-dotenv",
+  "pydantic",
+  "requests",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

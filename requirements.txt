@@ -1,5 +1,7 @@
 pandas
 numpy
+jax[cuda13]>=0.10.1
+optax>=0.2.8
 scikit-learn
 xgboost
 matplotlib

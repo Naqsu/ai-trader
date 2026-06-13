@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Trader Command Center</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <p class="eyebrow">Command Center</p>
+          <h1>AI Trader</h1>
+          <p class="subtle">
+            Beginner-friendly control panel for training, backtesting and live
+            paper-simulation monitoring.
+          </p>
+        </div>
+
+        <nav class="nav-list">
+          <a href="#overview">Overview</a>
+          <a href="#controls">Controls</a>
+          <a href="#live">Live Feed</a>
+          <a href="#risk">Risk Layer</a>
+          <a href="#history">History</a>
+        </nav>
+
+        <section class="status-panel">
+          <div class="status-row">
+            <span>Environment</span>
+            <strong id="runtimeMode">-</strong>
+          </div>
+          <div class="status-row">
+            <span>Primary market</span>
+            <strong id="primaryMarket">-</strong>
+          </div>
+          <div class="status-row">
+            <span>Dataset window</span>
+            <strong id="datasetWindow">-</strong>
+          </div>
+          <div class="status-row">
+            <span>Server refresh</span>
+            <strong id="lastRefresh">-</strong>
+          </div>
+        </section>
+
+        <section class="help-card">
+          <p class="eyebrow">How to use</p>
+          <ol>
+            <li>Prepare the dataset.</li>
+            <li>Train baseline models.</li>
+            <li>Run backtest, paper simulation, or continuous learning.</li>
+            <li>Watch decisions, veto reasons, model refresh and PnL live.</li>
+          </ol>
+        </section>
+      </aside>
+
+      <main class="main-content">
+        <section class="hero-band" id="overview">
+          <div>
+            <p class="eyebrow">Bot Status</p>
+            <h2>PaperFuturesMultiAgentBot</h2>
+            <p class="hero-copy">
+              Every signal is routed through market regime classification,
+              strategy selection, setup scoring, double-check, RiskGuardian
+              veto, conservative sizing and paper execution.
+            </p>
+          </div>
+          <div class="hero-metrics">
+            <div>
+              <span class="metric-label">Approved</span>
+              <strong id="approvedCount">0</strong>
+            </div>
+            <div>
+              <span class="metric-label">Blocked</span>
+              <strong id="blockedCount">0</strong>
+            </div>
+            <div>
+              <span class="metric-label">Skipped</span>
+              <strong id="skippedCount">0</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-grid">
+          <div class="panel kpi-strip">
+            <div class="kpi">
+              <span>Trades</span>
+              <strong id="tradeCount">0</strong>
+            </div>
+            <div class="kpi">
+              <span>Win Rate</span>
+              <strong id="winRate">0%</strong>
+            </div>
+            <div class="kpi">
+              <span>Net PnL</span>
+              <strong id="netPnl">0.00</strong>
+            </div>
+            <div class="kpi">
+              <span>Max Drawdown</span>
+              <strong id="maxDrawdown">0.00</strong>
+            </div>
+            <div class="kpi">
+              <span>Profit Factor</span>
+              <strong id="profitFactor">0.00</strong>
+            </div>
+            <div class="kpi">
+              <span>Ending Equity</span>
+              <strong id="endingEquity">0.00</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-grid" id="controls">
+          <div class="panel control-panel wide-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Controls</p>
+                <h3>Run Bot Tasks</h3>
+              </div>
+              <div class="toolbar">
+                <button id="refreshButton" class="action-button secondary">Refresh Now</button>
+                <button id="stopTaskButton" class="action-button danger">Stop Active Task</button>
+              </div>
+            </div>
+
+            <div class="task-grid">
+              <button class="task-button" data-task="prepare_dataset">
+                <span class="task-title">Prepare Dataset</span>
+                <span class="task-copy">Build the processed research dataset from `1m_data.csv`.</span>
+              </button>
+              <button class="task-button" data-task="train_market_regime_ai">
+                <span class="task-title">Train Market Regime AI</span>
+                <span class="task-copy">Train the baseline classifier for regime labels.</span>
+              </button>
+              <button class="task-button" data-task="train_setup_quality_ai">
+                <span class="task-title">Train Setup Quality AI</span>
+                <span class="task-copy">Train the baseline setup-quality model.</span>
+              </button>
+              <button class="task-button" data-task="run_backtest">
+                <span class="task-title">Run Backtest</span>
+                <span class="task-copy">Execute a conservative historical evaluation.</span>
+              </button>
+              <button class="task-button" data-task="run_paper_trading">
+                <span class="task-title">Run Paper Simulation</span>
+                <span class="task-copy">Replay the most recent data and stream decisions live.</span>
+              </button>
+              <button class="task-button" data-task="run_continuous_learning">
+                <span class="task-title">Run Continuous Learning</span>
+                <span class="task-copy">Keep cycling paper simulation and model refresh until you click Stop.</span>
+              </button>
+              <button class="task-button" data-task="run_continuous_rl_gen_learning">
+                <span class="task-title">Run Continuous RL+GEN Learning</span>
+                <span class="task-copy">Evaluate a population of parameter variants in parallel generations and promote the best runtime genome.</span>
+              </button>
+            </div>
+
+            <div class="active-task-card">
+              <div>
+                <p class="eyebrow">Active Task</p>
+                <h3 id="activeTaskName">No task running</h3>
+              </div>
+              <div class="active-task-meta">
+                <div>
+                  <span>Status</span>
+                  <strong id="activeTaskStatus">idle</strong>
+                </div>
+                <div>
+                  <span>Started</span>
+                  <strong id="activeTaskStarted">-</strong>
+                </div>
+                <div>
+                  <span>Return code</span>
+                  <strong id="activeTaskCode">-</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-grid" id="live">
+          <div class="panel chart-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Performance</p>
+                <h3>Equity Curve</h3>
+              </div>
+            </div>
+            <svg id="equityChart" viewBox="0 0 920 280" preserveAspectRatio="none"></svg>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Task Output</p>
+                <h3>Live Console</h3>
+              </div>
+            </div>
+            <pre id="taskConsole" class="console-panel">Waiting for task output...</pre>
+          </div>
+        </section>
+
+        <section class="section-grid">
+          <div class="panel chart-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Research Curve</p>
+                <h3>RL+GEN Equity Curve</h3>
+              </div>
+            </div>
+            <svg id="rlGenEquityChart" viewBox="0 0 920 280" preserveAspectRatio="none"></svg>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Research Loop</p>
+                <h3>RL+GEN Status</h3>
+              </div>
+            </div>
+            <div id="rlGenStatus" class="stack-list"></div>
+          </div>
+        </section>
+
+        <section class="section-grid">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Execution</p>
+                <h3>Strategy Breakdown</h3>
+              </div>
+            </div>
+            <div id="strategyBreakdown" class="stack-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Models</p>
+                <h3>Training Artifacts</h3>
+              </div>
+            </div>
+            <div id="modelStatus" class="stack-list"></div>
+          </div>
+        </section>
+
+        <section class="section-grid">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Market Regime</p>
+                <h3>Regime PnL</h3>
+              </div>
+            </div>
+            <div id="regimeBreakdown" class="stack-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Intraday</p>
+                <h3>Hour-of-Day PnL</h3>
+              </div>
+            </div>
+            <div id="hourBreakdown" class="stack-list"></div>
+          </div>
+        </section>
+
+        <section class="section-grid" id="risk">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Risk Guardian</p>
+                <h3>Veto Reasons</h3>
+              </div>
+            </div>
+            <div id="vetoBreakdown" class="stack-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Pattern Memory</p>
+                <h3>Repeated Losses</h3>
+              </div>
+            </div>
+            <div id="patternBreakdown" class="stack-list"></div>
+          </div>
+        </section>
+
+        <section class="section-grid">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Decision Flow</p>
+                <h3>Approved / Blocked / Skipped by Strategy</h3>
+              </div>
+            </div>
+            <div id="decisionStrategyBreakdown" class="stack-list"></div>
+          </div>
+        </section>
+
+        <section class="section-grid" id="history">
+          <div class="panel table-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Live Decisions</p>
+                <h3>Decision Feed</h3>
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Regime</th>
+                  <th>Strategy</th>
+                  <th>Reason</th>
+                </tr>
+              </thead>
+              <tbody id="decisionsTable"></tbody>
+            </table>
+          </div>
+
+          <div class="panel table-panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Live Trades</p>
+                <h3>Trade Feed</h3>
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Strategy</th>
+                  <th>Side</th>
+                  <th>Qty</th>
+                  <th>Exit</th>
+                  <th>Net PnL</th>
+                </tr>
+              </thead>
+              <tbody id="tradesTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

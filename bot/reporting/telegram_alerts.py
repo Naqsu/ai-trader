@@ -1,10 +1,11 @@
 """Send operational notifications and summary alerts."""
 
+from __future__ import annotations
+
 
 class TelegramAlerts:
     """Send operational notifications and summary alerts."""
 
-    def __init__(self) -> None:
-        """Initialize the placeholder component."""
-        # TODO: Wire dependencies through explicit constructor injection.
-        pass
+    def send(self, message: str) -> None:
+        """Placeholder no-op alert sender."""
+        _ = message

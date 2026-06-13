@@ -94,18 +94,47 @@ DataAgent
 
 ## Status
 
-Ten etap zawiera wyłącznie profesjonalny szkielet projektu:
+Aktualny stan projektu zawiera już działający pierwszy pipeline:
 
-- struktura katalogów,
-- minimalne pliki modułów,
-- placeholdery klas,
-- pliki konfiguracyjne,
-- skrypt automatycznie budujący strukturę.
+- ładowanie `1m_data.csv` z obsługą tab-wrapped CSV,
+- ograniczanie dużego datasetu do ostatnich `max_rows`,
+- budowę wielointerwałowego datasetu,
+- enrichment wskaźników i cech,
+- heurystyczny `MarketRegimeAI`,
+- trzy strategie wejścia,
+- `SetupQualityAI`,
+- `DoubleCheckAgent`,
+- `RiskGuardianAgent`,
+- sizing pozycji,
+- paper execution z commission/slippage,
+- backtest,
+- logowanie decyzji i transakcji,
+- proste skrypty treningowe dla modeli bazowych.
 
-Bez implementacji logiki tradingowej.
+To nadal jest wersja ostrożna i rozwojowa, ale nie jest już pustym szkieletem.
 
 ## Uruchomienie generatora struktury
 
 ```bash
 python scripts/build_project_structure.py
+```
+
+## Uruchomienie
+
+Przygotowanie datasetu:
+
+```bash
+python scripts/prepare_dataset.py
+```
+
+Backtest:
+
+```bash
+python scripts/run_backtest.py
+```
+
+Paper-trading simulation:
+
+```bash
+python scripts/run_paper_trading.py
 ```

@@ -10,12 +10,25 @@
   },
   "data": {
     "dataset_name": "NAS100 Historical Price Data",
+    "max_rows": 100000,
     "timeframes": ["1m", "5m", "15m", "30m", "1h", "4h", "1d", "1w", "1month"]
   },
   "execution": {
     "mode": "paper",
     "enable_live_execution": false,
     "double_check_required": true,
-    "risk_guardian_veto_enabled": true
+    "risk_guardian_veto_enabled": true,
+    "initial_capital": 50000
+  },
+  "learning": {
+    "enabled": true,
+    "online_window_trades": 50,
+    "reinforce_threshold": 200.0,
+    "penalize_threshold": -200.0,
+    "regime_loss_block_threshold": 3,
+    "setup_score_penalty": 0.08,
+    "setup_score_reward": 0.04,
+    "strategy_weight_step": 0.02,
+    "log_every_n_bars": 500
   }
 }

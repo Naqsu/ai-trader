@@ -20,6 +20,11 @@ dependencies = [
   "requests",
 ]
 
+[project.optional-dependencies]
+gpu-rocm = [
+  "jax[rocm7-local]",
+]
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]

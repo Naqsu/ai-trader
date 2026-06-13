@@ -1,10 +1,19 @@
 """Common strategy contract for all trading approaches."""
 
+from __future__ import annotations
 
-class BaseStrategy:
+from abc import ABC, abstractmethod
+
+import pandas as pd
+
+from bot.core.models import StrategySignal
+
+
+class BaseStrategy(ABC):
     """Common strategy contract for all trading approaches."""
 
-    def __init__(self) -> None:
-        """Initialize the placeholder component."""
-        # TODO: Wire dependencies through explicit constructor injection.
-        pass
+    name: str
+
+    @abstractmethod
+    def generate_signal(self, row: pd.Series) -> StrategySignal | None:
+        """Return a trade signal when conditions are met."""

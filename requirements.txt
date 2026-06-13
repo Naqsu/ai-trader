@@ -9,3 +9,5 @@ joblib
 python-dotenv
 pydantic
 requests
+# Optional ROCm GPU acceleration:
+# -r requirements-gpu-rocm.txt

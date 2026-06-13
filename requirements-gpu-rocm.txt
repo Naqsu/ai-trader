@@ -1,0 +1,2 @@
+# Install into the active Python environment on a ROCm-capable Linux host.
+"jax[rocm7-local]"

@@ -1,10 +1,13 @@
 """Momentum indicator placeholder."""
 
+from __future__ import annotations
+
+import pandas as pd
+
 
 class MomentumIndicator:
     """Momentum indicator placeholder."""
 
-    def __init__(self) -> None:
-        """Initialize the placeholder component."""
-        # TODO: Wire dependencies through explicit constructor injection.
-        pass
+    def calculate(self, frame: pd.DataFrame, periods: int = 10) -> pd.Series:
+        """Calculate percentage momentum."""
+        return frame["close"].pct_change(periods=periods)

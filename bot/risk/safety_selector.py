@@ -1,10 +1,13 @@
 """Select the safest eligible action under current risk constraints."""
 
+from __future__ import annotations
+
+from bot.core.models import StrategySignal
+
 
 class SafetySelector:
     """Select the safest eligible action under current risk constraints."""
 
-    def __init__(self) -> None:
-        """Initialize the placeholder component."""
-        # TODO: Wire dependencies through explicit constructor injection.
-        pass
+    def choose(self, signal: StrategySignal | None) -> StrategySignal | None:
+        """Return the selected action."""
+        return signal
